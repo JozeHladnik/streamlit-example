@@ -1,42 +1,32 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Nov  1 20:28:10 2021
+Created on Fri Nov 12 15:51:13 2021
 
 @author: Joze
 """
-from collections import namedtuple
-import altair as alt
-import math
+
+# Raw Package
+import numpy as np
 import pandas as pd
+import yfinance as yf#Data Source
 import streamlit as st
 
 """
-# Welcome to Streamlit!
-## To je Jožetova predelava applikacije
-Podatki so v `/streamlit_app.py` ki ga lahko predelujem kakor mi :heart: poželi!
-Če imaš vprašanja si preberi [documentacijo](https://docs.streamlit.io) in [community
-forums](https://discuss.streamlit.io).
-Spodaj pa je prikaz code:
+# Pregled Forex
+## To je Jožetov pregled simbolov
+Podatki so v `/streamlit_app.py` na mojem Github.com. Če te zanima delovanje si preberi [documentacijo](https://docs.streamlit.io) in [community
+forums](https://discuss.streamlit.io). 
+Meni je Streamlit zelo :heart:všeč:heart:.
+
 """
-
-
-#with st.echo(code_location='below'): #to dodaja kodo spodaj (v inted) na displej
-total_points = st.slider("Število točk", 1, 500, 200)
-num_turns = st.slider("Število obratov", 1, 100, 9)
-
-Point = namedtuple('Point', 'x y')
-data = []
-
-points_per_turn = total_points / num_turns
-
-for curr_point_num in range(total_points):
-    curr_turn, i = divmod(curr_point_num, points_per_turn)
-    angle = (curr_turn + 1) * 2 * math.pi * i / points_per_turn
-    radius = curr_point_num / total_points
-    x = radius * math.cos(angle)
-    y = radius * math.sin(angle)
-    data.append(Point(x, y))
-st.write('izbrani parametri: število obratov-', num_turns,' število točk/obrat',total_points)
-st.altair_chart(alt.Chart(pd.DataFrame(data), height=500, width=500)
-    .mark_circle(color='#0060c9', opacity=0.4)
-    .encode(x='x:Q', y='y:Q'))
+symbols=['EURUSD=X', 'JPY=X', 'GBPUSD=X', 'AUDUSD=X', 'NZDUSD=X', 'EURJPY=X', 'GBPJPY=X', 'EURGBP=X', 'EURCAD=X', 
+         'EURSEK=X', 'EURCHF=X', 'EURHUF=X', 'EURJPY=X', 'CNY=X', 'HKD=X', 'SGD=X', 'INR=X', 'MXN=X', 'PHP=X',
+         'IDR=X', 'THB=X', 'MYR=X', 'ZAR=X', 'RUB=X']
+symbol = st.sidebar.radio("Izberi",symbols)
+df= yf.download(tickers=symbol, period= '1mo', interval = '30m')#, iterval = '5m')
+st.write(df.head())
+st.write('  - - - - ')
+st.write('Današnji menjalni tečaji:')
+for i in symbols:
+    df= yf.download(tickers=i, period= '1mo', interval = '1d')
+    st.write(i,df.Close.iloc[-1])
