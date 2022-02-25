@@ -62,7 +62,7 @@ Position=st.sidebar.selectbox('Izberi Merilno mesto',MM,1) #spustni meni 2
 pl= places.loc[(places['id'] == Position)]
 
 st.sidebar.write('Nahajamo se na lokaciji: ', Lok)
-st.sidebar.write('Gledamo merilno mesto: ', Position,type(pl['name']), type(str(pl['name'])))
+st.sidebar.write('Gledamo merilno mesto: ', Position, str(pl['name'].to_string(index=False)))
 
 
 URL=URLo+'place_id='+str(Position)+'&interval_code='+'D'+'&start_time='+prviM+'&end_time='+zadnjiM
