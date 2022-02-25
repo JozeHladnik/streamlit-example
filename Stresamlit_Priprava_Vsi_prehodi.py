@@ -100,7 +100,7 @@ else:
         rects1 = ax.bar(df1['cas']-polD, df1['tja'], width, label=Dsmer[Position][0])  #dodaj oznake!!
         rects2 = ax.bar(df1['cas']+polD, df1['nazaj'], width, label=Dsmer[Position][1])
         ax.set_ylabel('Št. prehodov')
-        ax.set_title('prehodi mimo senzorja '+str(pl['name'])+'_'+i)
+        ax.set_title('prehodi mimo senzorja '+str(pl['name'].to_string(index=False))+'_'+i)
         ax.set_xticks(df1['cas'])
         ax.set_xticklabels(df1['Ocas'])
         ax.legend()
