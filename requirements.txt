@@ -7,3 +7,4 @@ plotly.express
 requests
 datetime
 matplotlib
+openpyxl
