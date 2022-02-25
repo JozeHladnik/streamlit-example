@@ -4,3 +4,6 @@ streamlit
 yfinance
 numpy
 plotly.express
+requests
+datetime
+matplotlib
